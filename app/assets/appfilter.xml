@@ -123,6 +123,7 @@
   <item component="ComponentInfo{com.hampusolsson.abstruct/com.hampusolsson.abstruct.splash.SplashActivity}" drawable="abstruct" name="Abstruct" />
   <item component="ComponentInfo{bg.abv.andro.emailapp/bg.abv.andro.emailapp.activities.MainActivity}" drawable="abv_mail" name="ABV Mail" />
   <item component="ComponentInfo{bg.abv.andro.emailapp/bg.abv.andro.emailapp.ui.activities.MainActivity}" drawable="abv_mail" name="ABV Mail" />
+  <item component="ComponentInfo{org.akanework.accord/org.akanework.gramophone.ui.MainActivity}" drawable="accord" name="Accord" />
   <item component="ComponentInfo{app.accrescent.client/app.accrescent.client.ui.MainActivity}" drawable="generic_moon" name="Accrescent" />
   <item component="ComponentInfo{com.digibites.accubattery/com.digibites.abatterysaver.BatterySaverActivity}" drawable="accubattery" name="AccuBattery" />
   <item component="ComponentInfo{apps.r.compass/apps.r.compass.StartActivity}" drawable="accurate_compass" name="Accurate Compasss" />
@@ -496,6 +497,7 @@
   <item component="ComponentInfo{io.anytype.app/com.anytypeio.anytype.ui.main.MainActivity}" drawable="anytype" name="Anytype" />
   <item component="ComponentInfo{com.anytypeio.anytype/com.anytypeio.anytype.ui.main.MainActivity}" drawable="anytype_legacy" name="Anytype Legacy" />
   <item component="ComponentInfo{com.chen.deskclock/com.chen.deskclock.DeskClock}" drawable="aosp_clock" name="AOSP Clock" />
+  <item component="ComponentInfo{me.bmax.apatch/.ui.MainActivity}" drawable="apatch" name="APatch" />
   <item component="ComponentInfo{pl.m4x.sphinx_customer_android_mobile_app_v2/pl.m4x.sphinx_customer_android_mobile_app_v2.MainActivity}" drawable="aperitif" name="Aperitif" />
   <item component="ComponentInfo{com.ea.gp.apexlegendsmobilefps/com.epicgames.ue4.GameActivity}" drawable="apex_legends" name="Apex Legends" />
   <item component="ComponentInfo{com.nonnonstop.apimate/com.nonnonstop.apimate.MainActivity}" drawable="apimater" name="APIMateR" />
@@ -1311,6 +1313,7 @@
   <item component="ComponentInfo{com.byu.id/com.byu.id.MainActivity}" drawable="by_u" name="by.U" />
   <item component="ComponentInfo{com.radinc.csharpshell/crc6435a96f15045e045c.MainActivity}" drawable="c_sharp_shell_dot_net_ide" name="C# Shell .NET IDE" />
   <item component="ComponentInfo{com.radinc.csharpshell/crc6483cd2bca369317c1.MainActivity}" drawable="c_sharp_shell_dot_net_ide" name="C# Shell .NET IDE" />
+  <item component="ComponentInfo{com.example.c001apk/.ui.main.MainActivity}" drawable="c001apk" name="c001apk" />
   <item component="ComponentInfo{de.c24.bankapp/de.check24.c24.MainActivity}" drawable="c24" name="C24 Bank" />
   <item component="ComponentInfo{de.c24.bankapp/de.check24.c24.pages.startup.SplashScreenActivity}" drawable="c24" name="C24 Bank" />
   <item component="ComponentInfo{com.c6bank.app/com.c6bank.android.ui.feature.intro.IntroActivity}" drawable="c6_bank" name="C6 Bank" />
