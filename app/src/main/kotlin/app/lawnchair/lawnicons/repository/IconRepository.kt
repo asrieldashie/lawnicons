@@ -1,11 +1,16 @@
 package app.lawnchair.lawnicons.repository
 
 import android.app.Application
-import app.lawnchair.lawnicons.model.IconInfo
+import app.lawnchair.lawnicons.model.IconInfoAppfilter
 import app.lawnchair.lawnicons.model.IconInfoModel
+import app.lawnchair.lawnicons.model.IconRequest
+import app.lawnchair.lawnicons.model.IconRequestModel
 import app.lawnchair.lawnicons.model.SearchInfo
-import app.lawnchair.lawnicons.util.getIconInfo
+import app.lawnchair.lawnicons.model.SearchMode
+import app.lawnchair.lawnicons.util.getIconInfoAppfilter
+import app.lawnchair.lawnicons.util.getSystemIconInfoAppfilter
 import javax.inject.Inject
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -15,14 +20,18 @@ import kotlinx.coroutines.withContext
 
 class IconRepository @Inject constructor(application: Application) {
 
-    private var iconInfo: List<IconInfo>? = null
+    private val coroutineScope = CoroutineScope(Dispatchers.IO)
+
+    private var iconInfo: List<IconInfoAppfilter>? = null
     val iconInfoModel = MutableStateFlow<IconInfoModel?>(value = null)
     val searchedIconInfoModel = MutableStateFlow<IconInfoModel?>(value = null)
-    private val coroutineScope = CoroutineScope(Dispatchers.IO)
+
+    private var systemPackageList: List<IconInfoAppfilter>? = null
+    var iconRequestList = MutableStateFlow<IconRequestModel?>(value = null)
 
     init {
         coroutineScope.launch {
-            iconInfo = application.getIconInfo()
+            iconInfo = application.getIconInfoAppfilter()
                 .associateBy { it.name }.values
                 .sortedBy { it.name.lowercase() }
                 .also {
@@ -35,17 +44,30 @@ class IconRepository @Inject constructor(application: Application) {
                         iconCount = it.size,
                     )
                 }
+            systemPackageList = application.getSystemIconInfoAppfilter()
+                .associateBy { it.name }.values
+                .sortedBy { it.name.lowercase() }
+            getIconRequestList()
         }
     }
 
-    suspend fun search(query: String) = withContext(Dispatchers.Default) {
+    suspend fun search(
+        mode: SearchMode,
+        query: String,
+    ) = withContext(Dispatchers.Default) {
         searchedIconInfoModel.value = iconInfo?.let {
             val filtered = it.mapNotNull { candidate ->
+                val searchIn =
+                    when (mode) {
+                        SearchMode.NAME -> candidate.name
+                        SearchMode.PACKAGE_NAME -> candidate.componentName
+                        SearchMode.DRAWABLE -> candidate.drawableName
+                    }
                 val indexOfMatch =
-                    candidate.name.indexOf(string = query, ignoreCase = true).also { index ->
+                    searchIn.indexOf(string = query, ignoreCase = true).also { index ->
                         if (index == -1) return@mapNotNull null
                     }
-                val matchAtWordStart = indexOfMatch == 0 || candidate.name[indexOfMatch - 1] == ' '
+                val matchAtWordStart = indexOfMatch == 0 || searchIn[indexOfMatch - 1] == ' '
                 SearchInfo(
                     iconInfo = candidate,
                     indexOfMatch = indexOfMatch,
@@ -62,6 +84,35 @@ class IconRepository @Inject constructor(application: Application) {
             IconInfoModel(
                 iconCount = it.size,
                 iconInfo = filtered,
+            )
+        }
+    }
+
+    fun clear() {
+        searchedIconInfoModel.value = iconInfoModel.value
+    }
+
+    private suspend fun getIconRequestList() = withContext(Dispatchers.Default) {
+        iconRequestList.value = systemPackageList?.let { packageList ->
+            val lawniconsData = iconInfoModel.value?.iconInfo?.map {
+                IconRequest(
+                    it.name,
+                    it.componentName,
+                )
+            } ?: listOf()
+
+            val systemData = packageList.map {
+                IconRequest(
+                    it.name,
+                    it.componentName,
+                )
+            }
+
+            val iconsRequested = lawniconsData intersect systemData.toSet()
+
+            IconRequestModel(
+                list = iconsRequested.toImmutableList(),
+                iconCount = iconsRequested.size,
             )
         }
     }

@@ -8,6 +8,7 @@ import java.util.Properties
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("org.jetbrains.kotlin.plugin.compose")
     id("org.jetbrains.kotlin.plugin.serialization")
     id("com.google.devtools.ksp")
     id("com.google.dagger.hilt.android")
@@ -25,7 +26,7 @@ val ciRunNumber = providers.environmentVariable("GITHUB_RUN_NUMBER").orNull.orEm
 val isReleaseBuild = ciBuild && ciRef.contains("main")
 val devReleaseName = if (ciBuild) "(Dev #$ciRunNumber)" else "($buildCommit)"
 
-val version = "2.8.0"
+val version = "2.9.0"
 val versionDisplayName = "$version ${if (isReleaseBuild) "" else devReleaseName}"
 
 android {
@@ -36,7 +37,7 @@ android {
         applicationId = "app.lawnchair.lawnicons"
         minSdk = 26
         targetSdk = 34
-        versionCode = 11
+        versionCode = 12
         versionName = versionDisplayName
         vectorDrawables.useSupportLibrary = true
     }
@@ -55,14 +56,18 @@ android {
         signingConfigs["debug"]
     }
 
+    androidResources {
+        generateLocaleConfig = true
+    }
+
     buildTypes {
+        all {
+            signingConfig = releaseSigning
+            isPseudoLocalesEnabled = true
+        }
         release {
             isMinifyEnabled = true
-            signingConfig = releaseSigning
             proguardFiles("proguard-rules.pro")
-        }
-        debug {
-            signingConfig = releaseSigning
         }
     }
 
@@ -81,10 +86,6 @@ android {
         buildConfig = true
         compose = true
         resValues = true
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.11"
     }
 
     packaging {
@@ -131,22 +132,22 @@ licensee {
 }
 
 dependencies {
-    val lifecycleVersion = "2.7.0"
+    val lifecycleVersion = "2.8.0"
     val hiltVersion = "2.51.1"
 
     implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("androidx.core:core-ktx:1.12.0")
-    implementation("androidx.activity:activity-compose:1.8.2")
-    implementation(platform("androidx.compose:compose-bom:2024.04.00"))
+    implementation("androidx.core:core-ktx:1.13.1")
+    implementation("androidx.activity:activity-compose:1.9.0")
+    implementation(platform("androidx.compose:compose-bom:2024.05.00"))
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.ui:ui-util")
     debugImplementation("androidx.compose.ui:ui-tooling")
     implementation("androidx.compose.animation:animation")
-    implementation("androidx.compose.material:material")
-    implementation("androidx.compose.material3:material3")
+    implementation("androidx.compose.material:material-icons-core-android:1.6.7")
+    implementation("androidx.compose.material3:material3:1.3.0-beta01")
     implementation("androidx.compose.material3:material3-window-size-class")
-    implementation("androidx.navigation:navigation-compose:2.7.7")
+    implementation("androidx.navigation:navigation-compose:2.8.0-beta01")
     implementation("androidx.core:core-splashscreen:1.0.1")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycleVersion")

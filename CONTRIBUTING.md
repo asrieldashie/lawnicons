@@ -11,9 +11,9 @@ For additional information on designing icons and samples, see [the Lawnicons Fi
 Need help? [Join Lawnchair on Discord](https://discord.com/invite/3x8qNWxgGZ).
 
 ### TL;DR on icon design
-The canvas is `192×192px`. The content area for most icons is `160×160px`, meaning the long side of an icon should be `160px`. Square icons should be `154×154px`. No fill, the stroke width is `12px`. All shapes should be black `#000` with rounded ends and joins. Round 90° angles by `6-32px`. Avoid blackness, close distances between shapes, and drastic changes in stroke widths. Simplify details, but don't lose recognizability. Provide original and localized names, so the icons can be found.
+The canvas is `192×192px`. The content area for most icons is `160×160px`, meaning the long side of an icon should be `160px`. Square icons should be `154×154px`. No fill, the stroke width is `12px`. All shapes should be black `#000` with rounded ends and joins. Round 90° angles by `6-32px`. Avoid blackness, close distances between strokes, and drastic changes in stroke widths. Simplify details, but don't lose recognizability. Provide original and localized names, so the icons can be found.
 
-To avoid rework, save time and understand the limitations of the guidelines, it is worth reading reviews of [the latest merged pull requests](https://github.com/LawnchairLauncher/lawnicons/pulls?q=is%3Apr+is%3Aclosed+label%3Aicons) (e.g., [+8 icons, +1 link, +4 updates](https://github.com/LawnchairLauncher/lawnicons/pull/1865)) and creating no more than 5 icons in the first attempt.
+To avoid rework, save time and understand the limitations of the guidelines, it is worth reading reviews (e.g., [+8 icons, +1 link, +4 updates](https://github.com/LawnchairLauncher/lawnicons/pull/1865)) and creating 5-10 icons in the first contribution.
 
 ### Canvas & Sizes
 
@@ -30,10 +30,12 @@ Square icons must fit the `154×154px` content area size. Icons that mostly fit 
 
 ![](docs/images/creating-icons-2-foundation.png)
 
+#### Color
+All shapes must have non-transparent black color `#000000`.
 #### Stroke widths
 The stroke should be kept at `12px` in most cases. If an icon is too minimal or dense, you'll need other widths: `14px` for the most minimal, and `8px` for the densest. For fine details, you can use `6px`. For more clarification, please refer to [the visual balance section](https://github.com/x9136/lawnicons/blob/addate/CONTRIBUTING.md#maintaining-visual-balance) down below.
-#### Color and end caps
-All shapes must have non-transparent black color `#000000`, rounded caps and joins.
+#### End caps
+All shapes must have rounded caps and joins.
 #### Corner radius
 Use `6—32px` for 90° angles. It is allowed to leave `0px` radius in cases when the others spoil the shape: for example, when a right angle is formed of short lines.
 
@@ -91,14 +93,14 @@ Wrong
 Correct
 <item component="..." drawable="hulu" name="Hulu ~~ フールー" />
 ```
-If there are letters at the beginning of the app name that aren't in English, then it's worth adding the name transliterated into English.
+If there are letters in the first `3` characters of the app name that aren't in English, then it's worth adding the name transliterated into English.
 ```
 Wrong
-<item component="..." drawable="otp_szep_card" name="OTP SZÉP Card" />
+<item component="..." drawable="lansforsakringar" name="Länsförsäkringar" />
 ```
 ```
 Correct
-<item component="..." drawable="otp_szep_card" name="OTP SZÉP Card ~~ OTP SZEP Card" />
+<item component="..." drawable="lansforsakringar" name="Länsförsäkringar ~~ Lansforsakringar" />
 ```
 ### Drawable
 Should be in English or transliterated from the original language. Should repeat the name of the app if possible.
@@ -109,6 +111,15 @@ Wrong
 ```
 Correct
 <item component="..." drawable="my_vodafone" name="My Vodafone ~~ MeinVodafone" />
+```
+If the app name starts with a digit, then the drawable should start with `_`.
+```
+Wrong
+<item component="..." drawable="ninegag" name="9GAG" />
+```
+```
+Correct
+<item component="..." drawable="_9gag" name="9GAG" />
 ```
 
 ## Adding an icon to Lawnicons
@@ -162,9 +173,9 @@ Please check the [icon tool guide](/docs/icontool_guide.md) for more information
 ### Using 3rd-party apps
 #### IconRequest app
 
-1. Download the [IconRequest app](https://github.com/Kaiserdragon2/IconRequest/releases).
-2. Launch the app and click one of the options:
-- UPDATE EXISTING — to copy packages with activities. [How to request icons](https://kappa.lol/FL_Oh), 25s video.
+1. Download IconRequest: [Google Play](https://play.google.com/store/apps/details?id=de.kaiserdragon.iconrequest) • [GitHub](https://github.com/Kaiserdragon2/IconRequest/releases).
+2. Launch IconRequest and tap one of the options:
+- UPDATE EXISTING — to copy packages with activities. [How to request icons](https://kappa.lol/u_MBz), 22s video.
 - REQUEST NEW — to save icon images and packages with activities. This option is better if you are creating icons.
 3. Select the apps for which youʼd like to request or make icons.
 4. Copy, save or share.
